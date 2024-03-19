@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import styles from "../AudioPlayer/AudioPlayer.module.css";
-import TimeLine from "../TimeLine"
+import TimeLine from "../TimeLine";
 
 export default function AudioPlayer(props) {
   const [canPlay, setCanPlay] = useState(false);
@@ -32,7 +32,11 @@ export default function AudioPlayer(props) {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      isPlaying && setCurrentTime(audioRef.current.currentTime);
+      if(isPlaying) {
+        setCurrentTime(audioRef.current.currentTime);
+        props?.onTimeChange(audioRef.current.currentTime);
+      }
+
     }, 500);
 
     return () => {

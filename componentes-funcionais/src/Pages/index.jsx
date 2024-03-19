@@ -1,34 +1,25 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { AppContext } from "../App";
 import MusicList from "../components/MusicList";
 import AudioPlayer from "../components/AudioPlayer";
-
-const musics = [
-  {
-    id: 1,
-    name: "Bigmouth Strikes Again",
-    artist: "Smiths",
-    time: "215",
-    url: 'musics/bigmouthstrikesagain.mp3',
-  },
-  {
-    id: 2,
-    name: "Half a Person",
-    artist: "Smiths",
-    time: "242",
-    url: 'musics/halfaperson.mp3',
-  },
-];
+import styles from "./index.module.css";
 
 export default function Index() {
-  const [width, setWidth] = useState(20);
+  const { selectedMusic, time, setTime, selectMusic, musicList } =
+    useContext(AppContext);
+
   return (
-    <div>
+    <div className={styles.page_container}>
       <MusicList
-        musics={musics}
-        selectedMusic={musics[0]}
-        onSelect={() => {}}
+        musics={musicList}
+        selectedMusic={selectedMusic}
+        onSelect={selectMusic}
       />
-      <AudioPlayer music={musics[0]}  onComplete={() => console.log('Finished')}/>
+      <AudioPlayer
+        music={selectedMusic}
+        onTimeChange={setTime}
+        onComplete={() => console.log("Finished")}
+      />
     </div>
   );
 }
